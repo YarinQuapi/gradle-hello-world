@@ -36,12 +36,21 @@ steps:
     jdkVersionOption: '1.11'  # Replace with your JDK version
     jdkArchitectureOption: 'x64'
 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)/build/libs'
+    Contents: '*.jar'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    
 - task: GitHubRelease@1
   inputs:
     gitHubConnection: 'yarinquapi github'
     repositoryName: '$(Build.Repository.Name)'
     action: 'create'
     target: '$(Build.SourceVersion)'
-    tagSource: 'gitTag'
+    tagSource: 'userSpecifiedTag'
+    tag: '$(BuildVersion)'
+    title: '$(Buildversion)'
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
