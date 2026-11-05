@@ -25,24 +25,16 @@ steps:
     echo "Full version: $(BuildVersion)"
   displayName: 'Version'
 
-- task: Gradle@3
+- task: Docker@2
   inputs:
-    gradleWrapperFile: 'gradlew'  # Path to your Gradle wrapper
-    tasks: 'build'  # Replace with the tasks you want to run
-    options: '-Pversion=$(BuildVersion)'
-    publishJUnitResults: false
-    testResultsFiles: '**/TEST-*.xml'  # Updated pattern for test result files
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.11'  # Replace with your JDK version
-    jdkArchitectureOption: 'x64'
+    command: 'build'
+    Dockerfile: '**/Dockerfile'
+    repository: "yarinquapi/gradle-hello-world"
+    arguments: '--build-arg BUILD_VERSION=$(BuildVersion)'
+    tags: |
+      $(BuildVersion)
+      latest
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)/build/libs'
-    Contents: '*.jar'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-    
 - task: GitHubRelease@1
   inputs:
     gitHubConnection: 'yarinquapi github'
