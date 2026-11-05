@@ -15,7 +15,7 @@ variables:
   Minor: 1
 
   VersionPrefix: '$(Major).$(Minor)'
-  Patch: $[counter(variables['VersionPrefix'], 0)]
+  Patch: $[counter(format('{0}.{1}', variables['Major'], variables['Minor']), 0)]
   BuildVersion: '$(Major).$(Minor).$(Patch)'
 
 
