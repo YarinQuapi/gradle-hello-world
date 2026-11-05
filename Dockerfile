@@ -6,12 +6,13 @@ WORKDIR /app
 
 COPY gradlew ./
 COPY build.gradle.kts ./
+COPY settings.gradle.kts ./
 COPY gradle ./gradle
 COPY src/ src/
 
 RUN sed -i 's/\r$//' gradlew # fixes windows CRLF to LF so it can actually read the file
 
-RUN chmod +x ./gradlew # executable on windows
+RUN chmod +x ./gradlew
 
 RUN ./gradlew build -Pversion=${BUILD_VERSION} --no-daemon
 
