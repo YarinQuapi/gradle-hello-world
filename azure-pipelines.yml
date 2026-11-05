@@ -12,7 +12,7 @@ pool:
 
 variables:
   Major: 1
-  Minor: 0
+  Minor: 1
 
   VersionPrefix: '$(Major).$(Minor)'
   Patch: $[counter(variables['VersionPrefix'], 0)]
@@ -32,7 +32,6 @@ steps:
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: |
-      $(Build.BuildId)
       $(BuildVersion)
       latest
 
