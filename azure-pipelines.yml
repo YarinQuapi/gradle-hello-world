@@ -9,7 +9,21 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+
+variables:
+  Major: 1
+  Minor: 0
+
+  VersionPrefix: '$(Major).$(Minor)'
+  Patch: $[counter(variables['VersionPrefix'], 0)]
+  BuildVersion: '$(Major).$(Minor).$(Patch)'
+
+
 steps:
+- script: |
+    echo "Patch version: $(Patch)"
+    echo "Full version: $(BuildVersion)"
+  displayName: 'Version'
 - task: Gradle@3
   inputs:
     gradleWrapperFile: 'gradlew'  # Path to your Gradle wrapper
