@@ -13,6 +13,7 @@ plugins {
 
 group = "com.ido"
 description = "HelloWorld"
+version = providers.gradleProperty("version").getOrElse("local-build")
 
 application.mainClass.set("com.ido.HelloWorld")
 
