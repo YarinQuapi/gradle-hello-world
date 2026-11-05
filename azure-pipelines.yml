@@ -27,11 +27,12 @@ steps:
 
 - task: Docker@2
   inputs:
-    command: 'build'
+    containerRegistry: 'DockerHub'
+    repository: 'yarinquapi/gradle-hello-world'
+    command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    repository: "yarinquapi/gradle-hello-world"
-    arguments: '--build-arg BUILD_VERSION=$(BuildVersion)'
     tags: |
+      $(Build.BuildId)
       $(BuildVersion)
       latest
 
