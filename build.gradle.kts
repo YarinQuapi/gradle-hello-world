@@ -14,8 +14,15 @@ plugins {
 group = "com.ido"
 description = "HelloWorld"
 version = providers.gradleProperty("version").getOrElse("local-build")
-
 application.mainClass.set("com.ido.HelloWorld")
+
+tasks.jar {
+    manifest {
+        attributes("Implementation-Version" to project.version)
+        attributes("Implementation-Title" to project.name)
+    }
+}
+
 
 repositories {
     mavenCentral()
